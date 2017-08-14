@@ -664,10 +664,8 @@ const tabs = (function(){
             `B.innerText=document.title;`,
             ... noAutoReload ? [] : [
                 `window.addEventListener('focus',function(){`,
-                // `window.setTimeout(function(){`,
                 `console.log(history);history.length>3?history.go(-1):`,
                 `location.href=B.href;`,
-                // `},100);`,
                 `});`,
             ],
             `});`,
