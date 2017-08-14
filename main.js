@@ -638,6 +638,9 @@ const tabs = (function(){
           *    suspend protocols not in `tabs.suspendProtocols`.
           * @params{debugText}
           *    A text to display in the suspended tab in developer mode.
+          *    
+          * TODO: tabs.suspend should handle only redirecting, 
+          * TODO  not deciding whether to redirect.
           */
         prefix = prefix || 'Suspended';
         const h = (string) => {
