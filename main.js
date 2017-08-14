@@ -656,22 +656,28 @@ const tabs = (function(){
               : '';
         const suspendPageSource = [
             '<html><head>',
-            iconmeta,
             `<title>${h(tab.title)}</title>`,
-            `</head><body>${prefix}: <a id='B' href=${a(tab.url)}>B</a>`,
-            debugText && await debug.isDevel() ? 
-                "<br/><pre>--- DEBUG ---<br>" + h(debugText) + '</pre>'
-                : '',
+            iconmeta,
             `<script>`,
+            `addEventListener('load',function(){`,
             `var B=document.getElementById('B');`,
             `B.innerText=document.title;`,
             ... noAutoReload ? [] : [
                 `window.addEventListener('focus',function(){`,
-                `console.log(history);history.length>2?history.back():`,
+                // `window.setTimeout(function(){`,
+                `console.log(history);history.length>3?history.go(-1):`,
                 `location.href=B.href;`,
+                // `},100);`,
                 `});`,
             ],
-            `</script></body></html>` 
+            `});`,
+            `</script>`,
+            `</head>`,
+            `<body>${prefix}: <a id='B' href=${a(tab.url)}>B</a>`,
+            debugText && await debug.isDevel() ? 
+                "<br/><pre>--- DEBUG ---<br>" + h(debugText) + '</pre>'
+                : '',
+            `</body></html>` 
         ].join('');
         const dataURI = `data:text/html;charset=UTF8,${suspendPageSource}`;
 
