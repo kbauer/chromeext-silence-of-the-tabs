@@ -19,7 +19,7 @@ the latter being the primary motivation for this addon.
 [The Great Suspender][1] uses the `chrome-extension://` protocol to
 store parked tabs. This enables it's advanced features, but
 
-  - Loses tabs, when installing the extension
+  - Loses tabs, when uninstalling the extension
   - Breaks synchronization of opened tabs to Chrome on mobile devices
 
 ### TabMemFree
@@ -77,7 +77,7 @@ of a webpage-screenshot in the data url.
 
 ## Open Ideas
 
- - <!-- TODO --> **Screenshots** 
+ - **Screenshots**
    Sadly it seems that there is no viable way to include a screenshot.
    The [html2canvas](https://github.com/niklasvh/html2canvas) library
    allows creating the screenshot, 
