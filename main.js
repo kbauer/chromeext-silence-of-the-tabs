@@ -640,7 +640,6 @@ const tabs = (function(){
           *    A text to display in the suspended tab in developer mode.
           */
         prefix = prefix || 'Suspended';
-        const s = (string) => JSON.stringify(string);
         const h = (string) => {
             /** Quote string for html. */
             const tmp = document.createElement('div');
@@ -654,29 +653,40 @@ const tabs = (function(){
         const iconmeta = tab.favIconUrl
               ? `<link rel='shortcut icon' type='image/x-icon' href=${a(tab.favIconUrl)}>`
               : '';
-        const suspendPageSource = [
-            '<html><head>',
-            `<title>${h(tab.title)}</title>`,
-            iconmeta,
-            `<script>`,
-            `addEventListener('load',function(){`,
-            `var B=document.getElementById('B');`,
-            `B.innerText=document.title;`,
-            ... noAutoReload ? [] : [
-                `window.addEventListener('focus',function(){`,
-                `console.log(history);history.length>3?history.go(-1):`,
-                `location.href=B.href;`,
-                `});`,
-            ],
-            `});`,
-            `</script>`,
-            `</head>`,
-            `<body>${prefix}: <a id='B' href=${a(tab.url)}>B</a>`,
-            debugText && await debug.isDevel() ? 
-                "<br/><pre>--- DEBUG ---<br>" + h(debugText) + '</pre>'
-                : '',
-            `</body></html>` 
-        ].join('');
+        const suspendPageSource = `
+            <html>
+              <head>
+                <title>${h(tab.title)}</title>
+                ${iconmeta}
+              </head>
+              <body>
+                ${prefix}: <a id='B' href=${a(tab.url)}>B</a>
+                <script>
+                  var B=document.getElementById('B');
+                  B.innerText=document.title;
+                  /* Guard: Prevent 'focus' from firing twice
+                   * and save some characters by using 0 being
+                   * falsy. */
+                  var G=0;
+                  addEventListener('focus',function(){
+                    if(G++){
+                      if(history.length>2){
+                        history.back();
+                      } else {
+                        location.href=B.href;
+                      }
+                    }
+                  });
+                </script>
+              </body>
+            </html>`
+              .replace(/\/\*(.|\n)*?\*\//g,'')
+              .replace(/>\s+/g,'>')
+              .replace(/\s+</g,'<')
+              .replace(/;\s+/g,';')
+              .replace(/{\s+/g,'{')
+              .replace(/\s+}/g,'}')
+              .replace(/\s+/g,' ');
         const dataURI = `data:text/html;charset=UTF8,${suspendPageSource}`;
 
         // Saveguard: Suspend only suspendable tabs / don't nest suspending.
