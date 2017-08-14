@@ -64,6 +64,7 @@ of a webpage-screenshot in the data url.
  - <!-- TODO --> **History-overshoot** There is a rare condition, where 
    the suspended url will navigate back by two instead of one steps of
    the history. The reason is unclear.
+     - Seems to be caused by `focus` even firing twice.
    
 ## Developer Notes
 
