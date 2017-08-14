@@ -680,6 +680,8 @@ const tabs = (function(){
                 </script>
               </body>
             </html>`
+              /* We can safely replace spaces now, because 
+               * those in href are protected by encodeURI. */
               .replace(/\/\*(.|\n)*?\*\//g,'')
               .replace(/>\s+/g,'>')
               .replace(/\s+</g,'<')
