@@ -1,0 +1,6 @@
+*
+!.gitignore
+!.*js
+!.*html
+!LICENSE
+!*.md
