@@ -430,6 +430,9 @@ const gui = (function(){
             }
             c(`<tr><td></td><td><button class='options.reset'>Reset Options</td></tr>`,
               `</table>`);
+            c(`<div>For bug-reports, see `
+              +`<a href='https://github.com/kbauer/Silence-of-the-Tabs#knownissues'>`
+              +`[HERE]</a></div>`);
             const div = document.createElement('div');
             div.class = 'options';
             div.innerHTML = content.join('\n');

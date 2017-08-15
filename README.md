@@ -60,8 +60,12 @@ length, data-URLs must be kept short. This has prevented the inclusion
 of a webpage-screenshot in the data url.
 
 ### Known Issues
+<a name='knownissues'>
 
-...
+Currently, no major issues are known. 
+
+If you want to report a new bug, check [the issue tracker][4]. 
+
    
 ## Developer Notes
 
@@ -102,3 +106,4 @@ of a webpage-screenshot in the data url.
 [1]: https://chrome.google.com/webstore/detail/the-great-suspender/klbibkeccnjlkjkiokjodocebajanakg
 [2]: https://chrome.google.com/webstore/detail/tabmemfree/pdanbocphccpmidkhloklnlfplehiikb
 [3]: https://github.com/glukki/TabMemFree
+[4]: https://github.com/kbauer/Silence-of-the-Tabs/issues
