@@ -6,10 +6,6 @@ Text for the Chrome Webstore below
 
 
 
-Suspends inactive tabs or optionally, by clicking the [S] icon, the current tab or all other tabs of the current window.
-
-
-
 !! BETA VERSION !!
 ==================
 
