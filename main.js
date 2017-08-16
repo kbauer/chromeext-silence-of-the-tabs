@@ -2,6 +2,7 @@
 
 // TODO A lot of unused code.
 // TODO Starting the Daemon from `gui.init` is counter-intuitive.
+// Trolling git since
 
 'use strict';
 
