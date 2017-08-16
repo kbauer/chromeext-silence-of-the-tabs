@@ -21,7 +21,7 @@ How Tabs are Stored
 
 The suspended tab is stored in a "Data-URL", which can be synchronized by Chrome's builtin Synchronization feature, such that the "Recent Tabs" feature on mobile devices and other PCs can be used. Since Data-URLs are local, no browsing information is sent to any server (other than, if enabled, Google's sync servers), so no privacy-issues should arise.
 
-Tabs that have been suspended by the timer, or by 
+Tabs that have been suspended by the timer, or by "Suspend Other Tabs" will reload automatically, when they are revisted.
 
 
 
