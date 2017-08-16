@@ -1,8 +1,12 @@
 /* -*- coding: iso-safe -*- */
 
-// TODO A lot of unused code.
-// TODO Starting the Daemon from `gui.init` is counter-intuitive.
-// Trolling git since
+// TODO: A lot of unused code.
+// TODO: Starting the Daemon from `gui.init` is counter-intuitive.
+// TODO: Refactor:
+// TODO    - tabs.suspend should really only suspend tabs.
+// TODO    - a funciton inside the sott.* namespace should handle
+// TODO      diciding whether suspending the tab is allowed.
+
 
 'use strict';
 
