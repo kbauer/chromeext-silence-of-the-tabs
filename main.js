@@ -6,6 +6,9 @@
 // TODO    - tabs.suspend should really only suspend tabs.
 // TODO    - a funciton inside the sott.* namespace should handle
 // TODO      diciding whether suspending the tab is allowed.
+// TODO: Whitelist option.
+//         See https://stackoverflow.com/a/2593661/2075630 for
+//         a `regexp-quote' implementation.
 
 
 'use strict';
