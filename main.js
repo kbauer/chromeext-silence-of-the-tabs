@@ -503,7 +503,7 @@ const gui = (function(){
             { 
                 text: 'Suspend current tab',
                 action: () => chrome.tabs.getSelected(function(tab){
-                    tabs.suspend(tab,{
+                    tabs.suspendSafe(tab,{
                         debugText:'Suspended manually',
                         prefix:'Suspended without autoreload',
                         noAutoReload:true,
@@ -518,7 +518,7 @@ const gui = (function(){
                     const all = await new Promise(r => chrome.tabs.getAllInWindow(null,r));
                     for(const tab of all){
                         if( tab.id != current.id ){
-                            tabs.suspend(tab,{
+                            tabs.suspendSafe(tab,{
                                 debugText:'Suspended manually',
                                 force:true
                             });
@@ -530,7 +530,7 @@ const gui = (function(){
                 text: 'Devel: Suspend current tab (autoreload)',
                 action: function(){
                     chrome.tabs.getSelected(null, function(tab){
-                        tabs.suspend(tab,{
+                        tabs.suspendSafe(tab,{
                             debugText:'Suspended manually (Devel: With autoreload)',
                             force:true
                         });
@@ -642,7 +642,7 @@ const tabs = (function(){
     //   suspension-inception.
     tabs.suspendProtocols = new Set(['https:','file:','http:','ftp:']);
 
-    tabs.suspend = async function suspend(tab,{noAutoReload,prefix,force,debugText}={}){
+    tabs.suspendSafe = async function suspend(tab,{noAutoReload,prefix,force,debugText}={}){
         /** Suspend a tab, by redirecting to a data-uri. 
           * 
           * @params{tab}
@@ -780,7 +780,7 @@ const sott = (function(){
 
         async function daemonInternal(){
             debug.log(`DAEMON_EXECUTE #${++counter}`);
-            const report = await tabs.map(tabs.suspend);
+            const report = await tabs.map(tabs.suspendSafe);
             if(await debug.isDevel()){
                 debug.log(
                     'SUSPEND_CHECK_REPORT\n'
