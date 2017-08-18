@@ -266,6 +266,16 @@ const debug = (function(){
 
 
 const options = (function(){
+    /** Options are accessed as promise, 
+      *     
+      *     const opt = wait options;
+      * 
+      * or 
+      * 
+      *     options.then(function(opt){
+      *         do_something(opt);
+      *     });
+      * */
     const options = {};
 
     const INFO = options.INFO = Object.freeze({
