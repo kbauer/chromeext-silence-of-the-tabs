@@ -694,7 +694,7 @@ const tabs = (function(){
                   var G=0;
                   addEventListener('focus',function(){
                     if(G++){
-                      if(history.length>2){
+                      if(history.length>1){
                         history.back();
                       } else {
                         location.href=B.href;
