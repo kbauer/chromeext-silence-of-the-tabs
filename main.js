@@ -6,6 +6,9 @@
 // TODO    - tabs.suspend should really only suspend tabs.
 // TODO    - a funciton inside the sott.* namespace should handle
 // TODO      diciding whether suspending the tab is allowed.
+// TODO: Whitelist option.
+//         See https://stackoverflow.com/a/2593661/2075630 for
+//         a `regexp-quote' implementation.
 
 
 'use strict';
@@ -263,6 +266,16 @@ const debug = (function(){
 
 
 const options = (function(){
+    /** Options are accessed as promise, 
+      *     
+      *     const opt = wait options;
+      * 
+      * or 
+      * 
+      *     options.then(function(opt){
+      *         do_something(opt);
+      *     });
+      * */
     const options = {};
 
     const INFO = options.INFO = Object.freeze({
@@ -490,7 +503,7 @@ const gui = (function(){
             { 
                 text: 'Suspend current tab',
                 action: () => chrome.tabs.getSelected(function(tab){
-                    tabs.suspend(tab,{
+                    tabs.suspendSafe(tab,{
                         debugText:'Suspended manually',
                         prefix:'Suspended without autoreload',
                         noAutoReload:true,
@@ -505,7 +518,7 @@ const gui = (function(){
                     const all = await new Promise(r => chrome.tabs.getAllInWindow(null,r));
                     for(const tab of all){
                         if( tab.id != current.id ){
-                            tabs.suspend(tab,{
+                            tabs.suspendSafe(tab,{
                                 debugText:'Suspended manually',
                                 force:true
                             });
@@ -517,7 +530,7 @@ const gui = (function(){
                 text: 'Devel: Suspend current tab (autoreload)',
                 action: function(){
                     chrome.tabs.getSelected(null, function(tab){
-                        tabs.suspend(tab,{
+                        tabs.suspendSafe(tab,{
                             debugText:'Suspended manually (Devel: With autoreload)',
                             force:true
                         });
@@ -629,7 +642,7 @@ const tabs = (function(){
     //   suspension-inception.
     tabs.suspendProtocols = new Set(['https:','file:','http:','ftp:']);
 
-    tabs.suspend = async function suspend(tab,{noAutoReload,prefix,force,debugText}={}){
+    tabs.suspendSafe = async function suspend(tab,{noAutoReload,prefix,force,debugText}={}){
         /** Suspend a tab, by redirecting to a data-uri. 
           * 
           * @params{tab}
@@ -677,11 +690,13 @@ const tabs = (function(){
                   B.innerText=document.title;
                   /* Guard: Prevent 'focus' from firing twice
                    * and save some characters by using 0 being
-                   * falsy. */
-                  var G=0;
+                   * falsy. 
+                   * When 'noAutoReload' is set, disable it from the start.
+                   * */
+                  var G=${noAutoReload ? '1' : '0'};
                   addEventListener('focus',function(){
-                    if(G++){
-                      if(history.length>2){
+                    if(!G++){
+                      if(history.length>1){
                         history.back();
                       } else {
                         location.href=B.href;
@@ -700,6 +715,7 @@ const tabs = (function(){
               .replace(/{\s+/g,'{')
               .replace(/\s+}/g,'}')
               .replace(/\s+/g,' ');
+        debug.log('suspendPageSource = ', suspendPageSource);
         const dataURI = `data:text/html;charset=UTF8,${suspendPageSource}`;
 
         // Saveguard: Suspend only suspendable tabs / don't nest suspending.
@@ -767,7 +783,7 @@ const sott = (function(){
 
         async function daemonInternal(){
             debug.log(`DAEMON_EXECUTE #${++counter}`);
-            const report = await tabs.map(tabs.suspend);
+            const report = await tabs.map(tabs.suspendSafe);
             if(await debug.isDevel()){
                 debug.log(
                     'SUSPEND_CHECK_REPORT\n'
