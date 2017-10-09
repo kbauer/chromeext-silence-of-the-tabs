@@ -690,10 +690,12 @@ const tabs = (function(){
                   B.innerText=document.title;
                   /* Guard: Prevent 'focus' from firing twice
                    * and save some characters by using 0 being
-                   * falsy. */
-                  var G=0;
+                   * falsy. 
+                   * When 'noAutoReload' is set, disable it from the start.
+                   * */
+                  var G=${noAutoReload ? '1' : '0'};
                   addEventListener('focus',function(){
-                    if(G++){
+                    if(!G++){
                       if(history.length>1){
                         history.back();
                       } else {
@@ -713,6 +715,7 @@ const tabs = (function(){
               .replace(/{\s+/g,'{')
               .replace(/\s+}/g,'}')
               .replace(/\s+/g,' ');
+        debug.log('suspendPageSource = ', suspendPageSource);
         const dataURI = `data:text/html;charset=UTF8,${suspendPageSource}`;
 
         // Saveguard: Suspend only suspendable tabs / don't nest suspending.
