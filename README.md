@@ -64,7 +64,13 @@ of a webpage-screenshot in the data url.
 
 Currently, no major issues are known. 
 
-If you want to report a new bug, check [the issue tracker][4]. 
+If you want to report a new bug, check [the issue tracker][4].
+
+
+## Change Log
+
+**2018-07-04** Quick update with icon.png to conform with new policies
+of Chrome extension store.
 
    
 ## Developer Notes
