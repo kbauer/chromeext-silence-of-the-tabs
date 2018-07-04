@@ -1,6 +1,6 @@
 
 ZIPCOMMAND := zip
-FILESINZIP = main.html main.js manifest.json LICENSE README.md
+FILESINZIP = main.html main.js manifest.json LICENSE README.md icon.png
 ZIPNAME = SilenceOfTheTabs
 
 all: $(ZIPNAME).zip
