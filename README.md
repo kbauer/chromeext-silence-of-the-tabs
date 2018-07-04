@@ -69,8 +69,13 @@ If you want to report a new bug, check [the issue tracker][4].
 
 ## Change Log
 
-**2018-07-04** Quick update with icon.png to conform with new policies
+**2018-07-04** (v0.2.2) Quick update with icon.png to conform with new policies
 of Chrome extension store.
+
+**2017-10-02** Bugfix: Suspended tabs didn't use history.back() if only one
+entry before suspension.
+
+**2017-08-15** (v0.2.1)
 
    
 ## Developer Notes
