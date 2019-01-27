@@ -526,6 +526,22 @@ const gui = (function(){
                     }
                 }
             },
+            {
+                text: 'Reload all tabs',
+                action: async function(){
+                    // Cycle through tabs of current window. It needs to be FOCUSED to reload!
+                    const current = await new Promise(r => chrome.tabs.getSelected(r));
+                    const all = await new Promise(r => chrome.tabs.getAllInWindow(null,r));
+                    for(const tab of all){
+                        // Does not work: After switching focus to a
+                        // different tab, the option page closes, causing
+                        // the script to abort silently.
+                        for(let idx=0; idx<all.length; idx++){
+                            await new Promise(r=>chrome.tabs.highlight({tabs:[idx]},r));
+                        }
+                    }
+                }
+            },
             ... ! await debug.isDevel() ? [] : [{
                 text: 'Devel: Suspend current tab (autoreload)',
                 action: function(){
