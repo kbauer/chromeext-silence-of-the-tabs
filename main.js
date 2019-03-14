@@ -714,8 +714,12 @@ const tabs = (function(){
               .replace(/;\s+/g,';')
               .replace(/{\s+/g,'{')
               .replace(/\s+}/g,'}')
-              .replace(/\s+/g,' ');
+              .replace(/\s+/g,' ')
+              /* Hashes (#) break the data URI and need to be encoded. */
+              .replace(/#/g, '%23');
+
         debug.log('suspendPageSource = ', suspendPageSource);
+
         const dataURI = `data:text/html;charset=UTF8,${suspendPageSource}`;
 
         // Saveguard: Suspend only suspendable tabs / don't nest suspending.
