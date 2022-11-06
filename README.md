@@ -6,6 +6,20 @@ This chrome extension helps keeping your PC sane, by suspending
 inactive tabs, saving memory, CPU cycles and stopping ads and videos
 from making noise. 
 
+## Deprecation notice
+
+Since I originally wrote this extension, several changes have
+happened, that make it obsolete:
+
+  1. Chrome has gained some features, that make this extension redundant,
+     as it now limits resource usage of background tabs.
+     
+  2. Redirecting to `data:...`-URIs has been disabled for a while for
+     code executed in the webpage context, but somewhere along the line
+     it was also disabled for the `chrome.tabs` API, which this extension
+     depends on.
+
+
 ## Comparison to other software
 
 Alternatives include 
